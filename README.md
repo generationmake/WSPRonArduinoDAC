@@ -1,6 +1,6 @@
 # WSPRonArduinoDAC
 [![Compile Sketch status](https://github.com/generationmake/WSPRonArduinoDAC/workflows/Compile%20Sketch/badge.svg)](https://github.com/generationmake/WSPRonArduinoDAC/actions?workflow=Compile+Sketch)
-
+[![General Formatting Checks](https://github.com/generationmake/WSPRonArduinoDAC/workflows/General%20Formatting%20Checks/badge.svg)](https://github.com/generationmake/WSPRonArduinoDAC/actions?workflow=General+Formatting+Checks)
 generating WSPR signals with the DAC on Arduino SAMD boards
 
 ## used hardware
