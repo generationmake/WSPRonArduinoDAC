@@ -13,6 +13,27 @@
 //const int sin_table[]={512,582,612,582,512,442,412,442};
 const int sin_table[]={512,519,522,519,512,505,502,505};
 
+/** sine table for 16 values:
+ *  
+ *  000.0 = +0.000 =  512
+ *  022.5 = +0.383 =  
+ *  045.0 = +0.707 =  873
+ *  067.5 = +0.924 =  
+ *  090.0 = +1.000 = 1023
+ *  112.5 = +0.924 =  
+ *  135.0 = +0.707 =  873
+ *  157.5 = +0.383 =  
+ *  180.0 = +0.000 =  512
+ *  202.5 = -0.383 =  
+ *  225.0 = -0.707 =  151
+ *  247.5 = -0.924 =  
+ *  270.0 = -1.000 =    1
+ *  292.5 = -0.924 =  
+ *  315.0 = -0.707 =  151
+ *  337.5 = -0.383 =  
+ */
+const int sin_table16[]={512,516,519,521,522,521,519,516,512,508,505,503,502,503,505,508};
+
 #include <SAMDTimerInterrupt.h>
 #include <JTEncode.h>
 
@@ -21,7 +42,7 @@ const int sin_table[]={512,519,522,519,512,505,502,505};
 
 #define WSPR_TONE_SPACING       146          // ~1.46 Hz
 #define WSPR_DELAY              683          // Delay value for WSPR
-#define BASE_FREQ               500.0   // NF base frequency
+#define BASE_FREQ               1500.0   // NF base frequency
 
 // Class instantiation
 SAMDTimer ITimer0(TIMER_TC3);
@@ -46,7 +67,7 @@ void encode()
   // Now transmit the channel symbols
   for(i = 0; i < symbol_count; i++)
   {
-    ITimer0.attachInterrupt(8.0*(BASE_FREQ+(float)(tx_buffer[i] * tone_spacing)/100.0), TimerHandler0);
+    ITimer0.attachInterrupt(16.0*(BASE_FREQ+(float)(tx_buffer[i] * tone_spacing)/100.0), TimerHandler0);
     delay(tone_delay);
   }
 
@@ -92,7 +113,7 @@ void loop() {
 void TimerHandler0()
 {
   static int counter=0;
-  analogWrite(A0,sin_table[counter]);
+  analogWrite(A0,sin_table16[counter]);
   counter++;
-  counter &=0x0007;
+  counter &=0x000f;
 }
