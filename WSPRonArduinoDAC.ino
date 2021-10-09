@@ -1,3 +1,5 @@
+/* This sketch will generate WSPR signals on the DAC of a SAMD Arduino */
+
 /** sine table for 8 values:
  *
  *  000 = +0.000 =  512
@@ -43,6 +45,7 @@ const int sin_table16[]={512,516,519,521,522,521,519,516,512,508,505,503,502,503
 #define WSPR_TONE_SPACING       146          // ~1.46 Hz
 #define WSPR_DELAY              683          // Delay value for WSPR
 #define BASE_FREQ               1500.0   // NF base frequency
+#define PTT_PIN                 2        // PTT pin
 
 // Class instantiation
 SAMDTimer ITimer0(TIMER_TC3);
@@ -63,6 +66,8 @@ void encode()
 
   // Reset the tone to the base frequency and turn on the output
   digitalWrite(LED_BUILTIN, HIGH);
+  // set PTT for transmission
+  digitalWrite(PTT_PIN, HIGH);
 
   // Now transmit the channel symbols
   for(i = 0; i < symbol_count; i++)
@@ -74,6 +79,8 @@ void encode()
   // Turn off the output
   ITimer0.detachInterrupt();
   digitalWrite(LED_BUILTIN, LOW);
+  // set PTT for transmission
+  digitalWrite(PTT_PIN, LOW);
 }
 
 void set_tx_buffer()
@@ -92,6 +99,10 @@ void setup() {
   // Use the Arduino's on-board LED as a keying indicator.
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
+
+  // set PTT pin
+  pinMode(PTT_PIN, OUTPUT);
+  digitalWrite(PTT_PIN, LOW);
 
   // Set the proper frequency, tone spacing, symbol count, and
   // tone delay depending on mode
