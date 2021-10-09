@@ -116,10 +116,9 @@ void setup() {
 }
 
 void loop() {
-  encode();
-  delay(9000);
+  encode();     // immediately start with first WSPR transmission
+  delay(10000); // wait for next WSPR time slot
 }
-
 
 void TimerHandler0()
 {

@@ -15,4 +15,6 @@ any Arduino board with an Atmel SAMD micocontroller
 
 ## pin usage
 
-only the DAC pin of the Arduino is used, typically pin A0
+only the DAC pin of the Arduino is used, typically pin A0.
+
+PTT on pin D2, if needed.
